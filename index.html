@@ -1,0 +1,347 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>PunchMailer</title>
+	<script src="http://code.jquery.com/jquery-1.10.2.js"></script>
+	<script type="text/javascript" src="punchmailer.js"></script>
+	<style type="text/css">
+		body {
+			background-color: white;
+			color: #555;
+			font-size: 1em;
+			font-family: Helvetica, Arial, sans-serif;
+			margin: 0;
+			padding: 0;
+			width: 100%;
+			height: 100%;
+		}
+		p, ol, ul {
+			list-style: none;
+			margin: 0;
+			padding: 0 0 10px;
+			border: 0;
+		}
+		li {
+			padding: 5px 0 5px 0;
+		}
+		a, a:visited {
+			color: #555;
+			text-decoration: underline;
+		}
+		a:hover, a:focus, a:active {
+			color:dodgerblue;
+			text-decoration: none;
+		}
+		input {
+			font-size: 100%;
+			padding: 3px;
+			display: inline-block;
+		}
+		.wrapper {
+			width: 96%;
+			padding: 0 2% 40px 2%;
+		}
+		.logo {
+			font-size: 300%;
+			color: dodgerblue;
+			text-shadow: 1px 1px 4px rgba(150, 150, 150, 1);
+		}
+		._btn, ._btn:visited, ._btn:active {
+			text-decoration: none;
+			border-bottom: 3px solid royalblue;
+			background: dodgerblue;
+			padding: 5px;
+			color: white;
+			border-radius: 5px;
+			text-decoration: none;
+			-webkit-transition: all 300ms ease-out;
+			transition: all 300ms ease-out;
+		}
+		._btn:hover, ._btn:focus {
+			color: white;
+			text-decoration: none;
+			border-bottom: 3px solid hotpink;
+			background: deeppink;
+		}
+		._txt {
+			font-family: "Courier New", Courier, monospace;
+			width: 100px;
+			border-radius: 3px;
+			border:1px solid #555;
+		}
+		._txtNarrow {
+			width: 50px;
+			margin: 3px 0 3px 0;
+		}
+		._style {
+			margin: 5px;
+			width: 500px !important;
+		}
+		.output {
+			font-family: "Courier New", Courier, monospace;
+			font-size: 100%;
+			color:#555;
+			text-align: left;
+			margin: 30px 0 30px 0;
+			padding: 5px;
+			border: 1px solid #555;
+			display: block;
+			white-space: pre;
+  			word-wrap: normal;
+			overflow: auto;
+			width:80%;
+			height: 300px;
+		}
+		.tagline {
+			line-height: 18px;
+			padding: 0;
+			font-variant: small-caps;
+			font-weight: normal;
+		}
+		.small{
+			font-size: 80%;
+		}
+		.usefulfor {
+			font-size: 90%;
+			font-style: italic;
+			color: #777;
+		}
+		fieldset {
+			margin: 0 0 20px 0;
+			border-radius: 3px;
+			border: 1px solid #ccc;
+			width: 60%;
+		} 
+		hr {
+			margin: 0 0 5px 0;
+			border: 1px solid #ddd;
+			width: 60%;
+		}
+	</style>
+</head>
+<body>
+	<div class="wrapper">
+		<h1 class="logo">PunchMailer</h1>
+		<p class="tagline">A simple interactive html e-mail template generator using <a href="https://twitter.com/M_J_Robbins" target="_blank">Mark Robbins</a> punch card css scripting technique. Transitions taken from <a href="https://twitter.com/creativechinch" target="_blank">Jonathan Chinchilla</a>  &amp; <a href="https://twitter.com/ericlepetitsf" target="_blank">Eric Lepetit</a> works.</p>
+		<p class="tagline"><a href="http://freshinbox.com/blog/the-dawn-of-kinetic-email/" target="_blank">Read this article to understand what interactive (or kinetic) e-mails are.</a></p>
+		<p class="tagline"><a href="https://www.youtube.com/watch?v=xhUfiOSOk3g" target="_blank">Video explaining the technique here</a> and <a href="https://litmus.com/community/learning/34-pushing-the-limits-of-email" target="_blank">another video if you want to go deeper</a>.</p>
+		<p class="tagline">Article full of ideas: <a href="https://css-tricks.com/the-checkbox-hack/" target="_blank">Stuff you can do with the Checkbox Hack</a>.  <a href="http://tympanus.net/codrops/2012/01/09/filter-functionality-with-css3/" target="_blank">An article about taking this further.</a></p>
+		<p class="tagline"><strong>Interactive e-mails work only on -webkit- supporting e-mail clients (iOS and Android clients, Outlook for MacOS).</strong></p>
+		<h2>States</h2>
+		<p><input id="radiobuttons_txt" type="number" min="0" class="_txt" size="3" value="2" /><strong> Grouped states</strong> (radio buttons)<sup>*</sup><br /><span class="usefulfor">Use Grouped States for image galleries, color choosers or diferent views of a product (360<sup>o</sup> image rotators).</span><br /><span class="small">* First state is visible by default.</span></p>
+		<p><input id="checkboxes_txt" type="number" min="0" class="_txt" size="3" value="0" /><strong> Toggle states</strong>  (check boxes)<sup>*</sup><br /><span class="usefulfor">Use Toggle States for info boxes, product configurators and add-on items.</span><br /><span class="small">* Toggle states are visible by default.</span></p>
+		<p><input id="links_txt" type="number" min="0" class="_txt" size="3" value="0" /><strong> Hover states</strong>  (links)<sup>*</sup><br /><span class="usefulfor">Use Hover States for hot spots, roll over interactions and tooltips.</span><br /><span class="small">* Hover states are hidden by default. In mobile devices they might behave like clicks. They might not work where Grouped and Toggle states work.</span></p>
+		<p><input type="checkbox" id="condense_ck" checked /><label for="condense_ck">Condense code</p>
+		<p><input type="checkbox" id="comments_ck" /><label for="comments_ck">Add comments to the code (remove in production)</p>
+		<h3>Views</h3>
+		<ul>
+			<li><input type="checkbox" id="view_ck" checked /><label for="view_ck">Add a view for each state.</label> View size: <input id="width_txt" type="text" class="_txt" value="320" /> by <input id="height_txt" type="text" class="_txt" value="372" /> 
+				or 
+				<select name="size_sl" id="size_sl">
+					<option value="600xauto">Standard size (600px)</option>
+					<option value="1000xauto">Maximum width (1000px)</option>
+					<optgroup label="Responsive design breakpoints">
+						<option value="480xauto">0-480px iPhone and smartphones</option>
+						<option value="640xauto">481-640px Android devices</option>
+						<option value="580xauto">580px+ Tablets, web and desktop clients</option>
+						<option value="100%x100%">100% Fluid layout</option>
+					</optgroup>
+					<optgroup label="Device size">
+						<option value="320x480">320x480 iPhone (portrait)</option>
+						<option value="480x320">480x320 iPhone (landscape)</option>
+						<option value="703x1024">703x1024 iPad (portrait)</option>
+						<option value="1024x703">1024x703 iPad (landscape)</option>
+					</optgroup>
+					<optgroup label="Web client">
+						<option value="618x100%">Yahoo!</option>
+						<option value="482x100%">Gmail</option>
+						<option value="371x100%">Outlook.com</option>
+						<option value="715x100%">AOL</option>
+					</optgroup>
+					<optgroup label="Mobile banner">
+						<option value="300x250">300x250 Medium Rectangle</option>
+						<option value="320x50">320x50 Mobile Banner</option>
+						<option value="300x50">300x50 Mobile Banner</option>
+						<option value="300x600">300x600 Half Page</option>
+					</optgroup>
+				</select>
+			</li>
+			<li>View display: 
+				<select name="display" id="display_sl">
+					<option value="position: absolute;">Layered</option>
+					<option value="display: inline-block;">Row</option>
+					<option value="display: block;">Column</option>
+				</select> <sub>*</sub><br />
+				<span class="small">For <em>Grouped States</em> we recommend <em>Layered</em>. For <em>Toggle States</em> usually is better to use either <em>Row</em> or <em>Column</em>.  <em>Hover States</em> work well with any display mode.</span>
+			</li>
+			<li>
+				<input type="checkbox" id="transition_ck" checked /><label for="transition_ck">
+				<select id="transition_sl">
+					<option value="opacity: 1;|opacity: 0;">Fade</option>
+					<option value="opacity: 1; transform: none; -webkit-transform: none;|opacity: 0; transform: scale(0); -webkit-transform: scale(0);">Small</option>
+					<option value="opacity: 1; transform: none; -webkit-transform: none;|opacity: 0; transform: translateY(50%) scale(2); -webkit-transform: translateY(50%) scale(2);">Big</option>
+					<option value="opacity: 1; transform: none; -webkit-transform: none;|opacity: 0; transform: translateX(-500%); -webkit-transform: translateX(-500%);">Left</option>
+					<option value="opacity: 1; transform: none; -webkit-transform: none;|opacity: 0; transform: translateX(500%); -webkit-transform: translateX(500%);">Right</option>
+					<option value="opacity: 1; transform: none; -webkit-transform: none;|opacity: 0; transform: translateY(-500%); -webkit-transform: translateY(-500%);">Top</option>
+					<option value="opacity: 1; transform: none; -webkit-transform: none;|opacity: 0; transform: translateY(500%); -webkit-transform: translateY(500%);">Down</option>
+				</select>
+				 transition between views.</label> Ease:
+				<select id="ease_sl">
+					<option value="ease">ease</option>
+					<option value="ease-out">ease-out</option>
+					<option value="ease-in">ease-in</option>
+					<option value="ease-in-out">ease-in-out</option>
+					<option value="linear">linear</option>
+					<option value="cubic-bezier(.65, 1.95, .03, .32)">bounce</option>
+					<option value="cubic-bezier(0.47, 2.02, 0.31, -0.36)">elastic</option>
+					<option value="cubic-bezier(.25,2,.75,.5)">spring</option>
+					<option value="cubic-bezier(.175, .885,.32,1.275)">swing</option>
+					<option value="cubic-bezier(.755,.05,.855,.06)">snap</option>
+					<option value="cubic-bezier(.2,1,.9,-0.5)">hesitate</option>
+					<option value="cubic-bezier(.5,0,.8,.15)">anticipate</option>
+					<option value="cubic-bezier(.41,.41,.35,1.2)">overshoot</option>
+					<option value="cubic-bezier(.45,-0.67,.53,1.63)">anticipate overshoot</option>
+					<option value="cubic-bezier(0.4,0,1,1)">fast out</option>
+					<option value="cubic-bezier(0,0,0.2,1)">slow in</option>
+					<option value="cubic-bezier(0.4,0,0.2,1)">fast out - slow in</option>
+					<optgroup label='Penner easings:'>
+						<option value="cubic-bezier(.55,.055,.675,.19)">easeInCubic</option>
+						<option value="cubic-bezier(.215,.61,.355,1)">easeOutCubic</option>
+						<option value="cubic-bezier(.645,.045,.355,1)">easeInOutCubic</option>
+						<option value="cubic-bezier(.6,.04,.98,.335)">easeInCirc</option>
+						<option value="cubic-bezier(.075,.82,.165,1)">easeOutCirc</option>
+						<option value="cubic-bezier(.785,.135,.15,.86)">easeInOutCirc</option>
+						<option value="cubic-bezier(.95,.05,.795,.035)">easeInExpo</option>
+						<option value="cubic-bezier(.19,1,.22,1)">easeOutExpo</option>
+						<option value="cubic-bezier(1,0,0,1)">easeInOutExpo</option>
+						<option value="cubic-bezier(.55,.085,.68,.53)">easeInQuad</option>
+						<option value="cubic-bezier(.25,.46,.45,.94)">easeOutQuad</option>
+						<option value="cubic-bezier(.455,.03,.515,.955)">easeInOutQuad</option>
+						<option value="cubic-bezier(.895,.03,.685,.22)">easeInQuart</option>
+						<option value="cubic-bezier(.165,.84,.44,1)">easeOutQuart</option>
+						<option value="cubic-bezier(.77,0,.175,1)">easeInOutQuart</option>
+						<option value="cubic-bezier(.755,.05,.855,.06)">easeInQuint</option>
+						<option value="cubic-bezier(.23,1,.32,1)">easeOutQuint</option>
+						<option value="cubic-bezier(.86,0,.07,1)">easeInOutQuint</option>
+						<option value="cubic-bezier(.47,0,.745,.715)">easeInSine</option>
+						<option value="cubic-bezier(.39,.575,.565,1)">easeOutSine</option>
+						<option value="cubic-bezier(.445,.05,.55,.95)">easeInOutSine</option>
+						<option value="cubic-bezier(.6,-.28,.735,.045)">easeInBack</option>
+						<option value="cubic-bezier(.175, .885,.32,1.275)">easeOutBack</option>
+						<option value="cubic-bezier(.68,-.55,.265,1.55)">easeInOutBack</option>
+					</optgroup>
+				</select> 
+				duration: <input id="duration_txt" type="number" class="_txt" size="3" value="1000" /> ms 
+			</li>
+			<li><input type="checkbox" id="fallback_ck" checked /><label for="fallback_ck">Create desktop view fallback</label></li>
+		</ul>
+		<h3>Navigation</h3>
+		<ul>
+			<li><strong>For grouped states:</strong></li>
+			<li><input type="checkbox" id="paginator_ck" checked /><label for="paginator_ck">Add paginator buttons (1|2|3...)</label></li>
+			<li><input type="checkbox" id="nav_ck" checked /><label for="nav_ck">Add navigation buttons (&lt; previous | next &gt;)</label></li>
+			<li><input type="checkbox" id="loop_ck" checked /><label for="loop_ck">Infinite carousel (looping)</label></li>
+			<li><strong>For toggle states:</strong></li>
+			<li><input type="checkbox" id="toggle_ck" checked /><label for="toggle_ck">Add toggle buttons (for toggle states)</label></li>
+			<li><input type="checkbox" id="before_ck"/><label for="before_ck">Button changes its own content</label></li>
+		</ul>
+		<fieldset>
+		<legend><strong>Button Styler</strong></legend>
+		<ul>
+			<li>
+				<input type="checkbox" id="styles_ck" checked /><label for="styles_ck">Style buttons</label><br />
+				Design style: 
+				<select name="design_sl" id="design_sl">
+					<option value="square"   	>Square</option>
+					<option value="menu"		>Menu</option>
+					<option value="round"    	>Round</option>
+					<option value="pill"   	 	>Pill</option>
+					<option value="tab"   	 	>Tab</option>
+					<option value="roundtab"    >Round Tab</option>
+					<option value="inverse"  	>Inverse Round Tab</option>
+					<option value="boxcutter"	>Box Cutter</option>
+				</select>
+				<input type="radio" name="fillstyle" id="outline_rb" checked><label for="outline_rb">Outline</label> 
+				<input type="radio" name="fillstyle" id="fill_rb"><label for="fill_rb">Fill</label> 
+			</li>
+			<li>Color scheme: 
+				<select name="color_sl" id="color_sl">
+					<optgroup label="Red">
+						<option value="#ba322f,#e1443f">Red</option>
+						<option value="#632322,#762d2b">Maroon</option>
+						<option value="#d73952,#e84b63">Grapefruit</option>
+						<option value="#d567ae,#e97fbf">Pink Rose</option>
+					</optgroup>
+					<optgroup label="Orange">
+						<option value="#e4503a,#f6694f">Bittersweet</option>
+						<option value="#d35400,#e67e22">Pumpkin</option>
+					</optgroup>
+					<optgroup label="Yellow">
+						<option value="#f2bd39,#fcd04d">Sunflower</option>
+						<option value="#d3c296,#eddeb4">Sand</option>
+					</optgroup>
+					<optgroup label="Green">
+						<option value="#8dc54c,#a1d963">Grass</option>
+						<option value="#8fb427,#a6c93f">Lime</option>
+						<option value="#2f5136,#375f41">Forest</option>
+						<option value="#43c09b,#53d2ae">Mint</option>
+						<option value="#3b6272,#406f81">Teal</option>
+					</optgroup>
+					<optgroup label="Blue">
+						<option value="#9caad4,#bac8f1">Powder</option>
+						<option value="#49addb,#5bc0ea">Aqua</option>
+						<option value="#5384dd,#6498ee">Sky</option>
+						<option value="#3d4a80,#5463a0">Blue</option>
+						<option value="#2f3e50,#37495e">Navy</option>	
+					</optgroup>
+					<optgroup label="Purple">
+						<option value="#9873de,#ad8bef">Lavander</option>
+						<option value="#5d43a2,#7558c3">Purple</option>
+						<option value="#4e294f,#5d315e">Plum</option>
+					</optgroup>
+					<optgroup label="Brown">
+						<option value="#8b725e,#a18671">Coffee</option>
+						<option value="#4f3b2c,#5c4534">Brown</option>
+					</optgroup>
+					<optgroup label="Gray">
+						<option value="#bdc3c7,#edf0f1">White</option>
+						<option value="#e6e8ee,#f6f7fb">Light Gray</option>
+						<option value="#abb2bd,#ccd0d9">Medium Gray</option>
+						<option value="#434954,#656c78">Dark Gray</option>
+						<option value="#262626,#2b2b2b">Black</option>	
+					</optgroup>
+				</select> 
+				Text color: 
+				<select name="textcolor_sl" id="textcolor_sl">
+					<option value="#FFFFFF">Light</option>
+					<option value="#333333">Dark</option>
+					<option value="color">Color</option>
+				</select> 
+				<br />
+				Font family: 
+				<select name="fontfamily_sl" id="fontfamily_sl">
+					<option value="'Segoe UI', Frutiger, 'Frutiger Linotype', 'Dejavu Sans', 'Helvetica Neue', Arial, sans-serif">Segoe, Helvetica</option>
+					<option value="Arial, Helvetica, sans-serif">Arial, Helvetica, sans-serif</option>
+					<option value="Verdana, Geneva, sans-serif">Verdana, Geneva, sans-serif</option>
+					<option value="Courier New, Courier, monospace">Courier New, monospace</option>
+					<option value="Times New Roman, Times, serif">Times New Roman, serif</option>
+				</select>
+				Font size: <input id="fontsize_txt" type="number" class="_txt _txtNarrow" value="16" /> 
+				<input type="checkbox" id="bold_ck"><label for="bold_ck"> Bold</label>
+			</li>
+			<li>Mouse up/unselected state: <input id="up_txt" type="text" class="_txt _style" value="font-size: 16px; font-family: 'Segoe UI', Frutiger, 'Frutiger Linotype', 'Dejavu Sans', 'Helvetica Neue', Arial, sans-serif; color: #911600; background-color: #FFFFFF; border: 1px solid #911600; text-decoration: none; transition: all 300ms ease-out; -webkit-transition: all 300ms ease-out; display:inline-block; padding: 8px; margin: 3px; " /><br />
+				Mouse down/selected state: <input id="down_txt" type="text" class="_txt _style" value="background-color: #B8270C; border: 1px solid transparent; color: #FFFFFF; " />
+			</li>
+		</ul>
+		</fieldset>
+		<a href="#" id="create_btn" class="_btn">Create e-mail template</a>
+		<iframe src="" id="renderFrame" frameborder="0" style="width:1000px; height:600px; border: 1px dashed #555; display: block; margin-top: 20px;"></iframe>
+		<textarea id="code_txt" cols="100" rows="10" class="output">
+			
+		</textarea>	
+		<p><a href="https://putsmail.com/" target="_blank">Test your e-mails here</a></p>
+		<p class="small">&copy;2015 Emmanuel Ulloa</p>
+	</div>
+</body>
+</html>
